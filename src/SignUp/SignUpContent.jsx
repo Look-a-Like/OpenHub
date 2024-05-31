@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { checkValidData } from '../utils/checkValidData';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 
 const SignUpContent = () => {
@@ -12,6 +12,7 @@ const SignUpContent = () => {
     const [errorMessage, setErrorMessage] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [visible, setVisible] = useState(false);
+    const SignUpNavigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -43,6 +44,7 @@ const SignUpContent = () => {
                         password: '',
                     });
                     setErrorMessage('');
+                    SignUpNavigate('/');
                 } else {
                     console.error('Incorrect combination of email and password', response.statusText);
                 }

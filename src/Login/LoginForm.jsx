@@ -18,42 +18,72 @@ const LoginForm = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleFormSubmission = async () => {
-        setIsSubmitting(true);
+
+    const handleFormSubmission = () => {
         const { email } = formData;
         const message = checkValidData(email);
         setErrorMessage(message);
-
-        if (!message && formData.email && formData.password) {
-            try {
-                console.log("formData :: ", formData);
-                const response = await fetch('', {
-                    method: 'POST',
-                    headers: {
-                        'token': "",
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData),
-                });
-
-                // Navigate to the main page regardless of the response
-                setFormData({
-                    email: '',
-                    password: '',
-                });
-                setErrorMessage('');
-                const loggedInEmployeeId = response.data.id; // Assuming the backend returns the employee ID
-                localStorage.setItem('employeeId',loggedInEmployeeId);
-                LoginNavigate('/MainPage');
-            } catch (error) {
-                console.error('Error Logging in', error.message);
-            } finally {
-                setIsSubmitting(false);
-            }
+    
+        if (!message && formData.email) {
+            // Store the user email address
+            localStorage.setItem('userEmail', formData.email);
+            setFormData({
+                email: '',
+                password: '',
+            });
+            setErrorMessage('');
+            LoginNavigate('/MainPage');
         } else {
             setIsSubmitting(false);
         }
     };
+    
+
+    // const handleFormSubmission = async () => {
+    //     setIsSubmitting(true);
+    //     const { email } = formData;
+    //     const message = checkValidData(email);
+    //     setErrorMessage(message);
+
+    //     if (!message && formData.email && formData.password) {
+    //         try {
+    //             console.log("formData :: ", formData);
+    //             const response = await fetch('YOUR_API_ENDPOINT', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'token': "YOUR_TOKEN",
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify(formData),
+    //             });
+
+    //             const result = await response.json();
+
+    //             if (response.ok && result.data) {
+    //                 // Store the user's email address in localStorage
+    //                 localStorage.setItem('userEmail', formData.email);
+
+    //                 // Navigate to the main page
+    //                 setFormData({
+    //                     email: '',
+    //                     password: '',
+    //                 });
+    //                 setErrorMessage('');
+    //                 LoginNavigate('/MainPage');
+    //             } else {
+    //                 // Handle case where response is not ok or data is missing
+    //                 setErrorMessage('Login failed. Please check your credentials and try again.');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error Logging in', error.message);
+    //             setErrorMessage('An error occurred while logging in. Please try again later.');
+    //         } finally {
+    //             setIsSubmitting(false);
+    //         }
+    //     } else {
+    //         setIsSubmitting(false);
+    //     }
+    // };
 
     const { email, password } = formData;
     const isActive = email && password && !isSubmitting;
@@ -138,7 +168,7 @@ const LoginForm = () => {
                         </div>
                     </form>
                     <div className="text-center mt-4">
-                    <p>No Account yet? <Link to="/SignUp" className="text-red-600 font-semibold">SIGN UP</Link></p>
+                        <p>No Account yet? <Link to="/SignUp" className="text-red-600 font-semibold">SIGN UP</Link></p>
                     </div>
                 </div>
             </div>

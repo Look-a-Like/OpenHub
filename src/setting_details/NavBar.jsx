@@ -15,7 +15,7 @@ import {
 
 export function NavBar() {
   return (
-    <div className="flex min-h-screen w-full bg-muted/40">
+    <div className="flex min-h-screen bg-muted/40">
       <aside className="fixed top-10 bottom-10 left-8 z-10 w-20 flex flex-col bg-red-400 rounded-3xl">
         <div className="flex flex-col items-center mb-auto mt-10">
           <Link
